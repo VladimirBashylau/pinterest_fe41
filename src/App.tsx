@@ -1,9 +1,14 @@
 import React from "react";
 
 import "./App.css";
+import PostItem from "./components/PostItem/PostItem";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <PostItem />
+    </>
+  );
 }
 
 export default App;
