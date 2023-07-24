@@ -7,11 +7,12 @@ import {
   AiOutlineRight,
   AiOutlineDown,
 } from "react-icons/ai";
+import dr from './dr.jpg'
 const PostItem = () => {
   return (
     <Wrapper>
       <div className="image__wrapper">
-        <img src="" />
+        <img src={dr} />
       </div>
       <PostWrapper>
         <PostHeader>
