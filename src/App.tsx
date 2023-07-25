@@ -1,14 +1,12 @@
 import React from "react";
 
 import "./App.css";
-import Header from "./components/header/Header";
-import Register from "./components/register";
+import Header from "./components/header/Header"
 
 function App() {
   return (
     <>
       <Header />
-      <Register></Register>
     </>
   );
 }
