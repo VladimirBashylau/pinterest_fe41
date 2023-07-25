@@ -1,12 +1,14 @@
 import React from "react";
 
 import "./App.css";
-import PostItem from "./components/PostItem/PostItem";
+import Header from "./components/header/Header";
+import Register from "./components/register";
 
 function App() {
   return (
     <>
-      <PostItem />
+      <Header />
+      <Register></Register>
     </>
   );
 }
