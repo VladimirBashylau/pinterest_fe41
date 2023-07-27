@@ -1,6 +1,4 @@
 import React from "react";
-import { FaPinterest, FaSearch } from "react-icons/fa";
-import { IoMdExit } from "react-icons/io";
 import styled from "styled-components";
 
 const HeaderUnLogin = () => {
@@ -104,7 +102,7 @@ const IconWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-left: 10px;
-  flex: 0.25;
+
   @media (max-width: 568px) {
     display: none;
   }
