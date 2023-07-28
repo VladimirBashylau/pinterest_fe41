@@ -1,14 +1,17 @@
 import React from "react";
 
 import "./App.css";
-import Header from "./components/header/Header";
+import Header from "./layout/Header/Header";
 import Register from "./components/register";
+
+import Home from "./pages/Home";
 
 function App() {
   return (
     <>
-      <Header />
-      <Register></Register>
+      {/* <Header />
+      <Home /> */}
+      {/* <Register></Register> */}
     </>
   );
 }

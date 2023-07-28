@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   AiOutlineEllipsis,
@@ -8,12 +8,30 @@ import {
   AiOutlineDown,
 } from "react-icons/ai";
 import dr from "./dr.jpg";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 const PostItem = () => {
+  const [post, setPost] = useState({
+    id: 0,
+    title: "",
+    image: "",
+    text: "",
+  });
+  const params = useParams();
+
+  useEffect(() => {
+    axios
+      .get(`https://studapi.teachmeskills.by/blog/posts/${params.id}/`)
+      .then((response) => {
+        setPost(response.data);
+      });
+  }, [params.id]);
+
   return (
     <Container>
       <Wrapper>
         <ImageWrapper>
-          <img src={dr} />
+          <img src={post.image} />
         </ImageWrapper>
         <PostWrapper>
           <PostHeader>
@@ -24,6 +42,10 @@ const PostItem = () => {
             </IconBtnsWrapper>
             <SaveButton>Save</SaveButton>
           </PostHeader>
+          <PostTitleWrap>
+            <p className="post__title">{post.title}</p>
+            <p className="post__text">{post.text}</p>
+          </PostTitleWrap>
           <div className="wrap__com">
             <ProfilWrapper>
               <div className="user__wrap">
@@ -89,6 +111,15 @@ const Wrapper = styled.div`
   box-shadow: 11px 7px 16px 4px #efefef;
   max-width: 1400px;
   transform: translateY(-25%);
+  min-width: 900px;
+`;
+const PostTitleWrap = styled.div`
+  margin-bottom: 10px;
+  .post__title {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
 `;
 const ImageWrapper = styled.div`
   width: 50%;
@@ -144,7 +175,7 @@ const ProfilWrapper = styled.div`
     font-weight: 600;
   }
 `;
-const AvatarWrapper = styled.div`
+export const AvatarWrapper = styled.div`
   height: 48px;
   width: 48px;
   border-radius: 50%;
@@ -157,14 +188,14 @@ const AvatarWrapper = styled.div`
   }
 `;
 
-const UserAvatarWrapper = styled(AvatarWrapper)`
-  height: 30px;
-  width: 30px;
+export const UserAvatarWrapper = styled(AvatarWrapper)`
+  height: 32px;
+  width: 32px;
 `;
 const PostHeader = styled.div`
   display: flex;
 
-  margin-bottom: 32px;
+  margin-bottom: 20px;
   justify-content: space-between;
 `;
 const IconBtnsWrapper = styled.div`
