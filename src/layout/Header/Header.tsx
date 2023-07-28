@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 
 import HeaderLogin from "./HeaderLogin";
 import HeaderUnLogin from "./HeaderUnLogin";
-import { useSelector } from "react-redux";
 
 const Header = () => {
-  const loginSelector = useSelector((state:any)=> state.login);
-  const [login, setLogin] = useState(false);
-  return(
-<div>
-    {login === true ?  <HeaderLogin /> :  <HeaderUnLogin />}
-</div>
-  )
+  return (
+    <>
+      <HeaderLogin />
+      <HeaderUnLogin />
+    </>
+  );
 };
 
 export default Header;
