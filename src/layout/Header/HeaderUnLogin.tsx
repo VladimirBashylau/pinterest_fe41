@@ -1,7 +1,14 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import login, { SetLogin } from "../../redux/reducers/login";
+import Register from "../../components/register";
+import { SetRegister } from "../../redux/reducers/register";
 
 const HeaderUnLogin = () => {
+  const dispatch = useDispatch();
+  let loginSelector:string = useSelector((state:any)=>state.login.login);
+  let registrationSelector:string = useSelector((state:any)=>state.register.register)
   return (
     <Wrapper>
       <LogoWrapper>
@@ -20,11 +27,11 @@ const HeaderUnLogin = () => {
       </LogoWrapper>
 
       <IconWrapper>
-        <LoginButton>
+        <LoginButton  onClick={()=>{loginSelector === 'closed' ? dispatch(SetLogin('open')) : dispatch(SetLogin('closed'))}}>
           <p>Log in</p>
         </LoginButton>
 
-        <CreateButton>
+        <CreateButton  onClick={()=>{registrationSelector === 'closed' ? dispatch(SetRegister('open')) : dispatch(SetRegister('closed'))}}>
           <p>Registration</p>
         </CreateButton>
       </IconWrapper>
