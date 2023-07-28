@@ -4,11 +4,7 @@ import * as Yup from "yup";
 import { authService } from "../services/auth";
 import { useState } from "react";
 import { DefaultTextField } from "./DefaultTextFIeld";
-import { useDispatch, useSelector } from "react-redux";
-import { LOCAL_STORAGE_KEYS } from "../services/keys";
-import { SetUser } from "../redux/reducers/user";
 import { styled } from "styled-components";
-
 
 const RegisterSchema = Yup.object().shape({
   username: Yup.string().min(4, "Too shoort name").required("Required"),
@@ -27,21 +23,8 @@ const initialValues = {
 type FormikValues = typeof initialValues;
 
 const Register = () => {
-  const useUser = useSelector((state:any)=> state.user);
-const dispatch = useDispatch();
   const [user, setUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const authUser = async () => {
-    const accessToken = localStorage.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
-
-    if (accessToken) {
-      try {
-      const  data  =  authService.getCurrentUser();
-      dispatch(SetUser((await data).data));
-      console.log(useUser);
-      } catch (error) {}
-    }
-  };
 
   const onSubmit = async (values: FormikValues) => {
     try {
@@ -50,7 +33,6 @@ const dispatch = useDispatch();
       const { data: user } = await authService.register(values);
 
       setUser(user);
-      authUser()
     } catch (error) {
       console.dir(error);
     } finally {
@@ -63,8 +45,7 @@ const dispatch = useDispatch();
   }
 
   return (
-    <RegWrapper>
-    <div className="regWrap">
+    <div>
       <Formik
         initialValues={initialValues}
         validationSchema={RegisterSchema}
@@ -105,7 +86,6 @@ const dispatch = useDispatch();
         </Form>
       </Formik>
       </div>
-      </RegWrapper>
   );
 };
 
@@ -125,4 +105,3 @@ const RegWrapper = styled.div`
 `
 
 export default Register;
-
