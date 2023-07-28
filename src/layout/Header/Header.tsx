@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
   const loginSelector = useSelector((state:any)=> state.login);
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
   return(
 <div>
     {login === true ?  <HeaderLogin /> :  <HeaderUnLogin />}
