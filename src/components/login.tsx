@@ -6,7 +6,7 @@ import { authService } from "../services/auth";
 import * as Yup from "yup";
 import { LOCAL_STORAGE_KEYS } from "../services/keys";
 import { useDispatch, useSelector } from "react-redux";
-import { SetUser } from "../redux/reducers/user";
+import { SetUser } from "../store/reducers/user";
 import { styled } from "styled-components";
 
 const LoginSchema = Yup.object().shape({
@@ -112,7 +112,7 @@ const LoginWrapper = styled.div`
   padding: 100px 50px;
   border-radius: 10px;
   box-shadow: 0 0 0 500vmax rgb(0 0 0 / 0.5);
-  z-index: 300;
+  z-index: 100;
   background-color: white;
 }
 `

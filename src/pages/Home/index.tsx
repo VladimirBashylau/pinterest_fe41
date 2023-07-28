@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Post from "./Post";
 import { CircularProgress } from "@mui/material";
-import { fetchPosts } from "../../redux/actions/posts";
+import { fetchPosts } from "../../store/actions/posts";
 import { Link } from "react-router-dom";
 import { Routes } from "../../constans/Routes";
-import { RootState } from "../../redux/store";
+import { RootState } from "../../store";
 import styled from "styled-components";
 
 const Home = () => {

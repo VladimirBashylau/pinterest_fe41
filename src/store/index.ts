@@ -1,10 +1,13 @@
-import { combineReducers, createStore ,applyMiddleware} from "redux";
+import { configureStore } from "@reduxjs/toolkit";
+import { postsReducer } from "./reducers/posts";
+
+import { combineReducers, createStore, applyMiddleware} from "redux";
 import userReducer from './reducers/user';
 import loginReducer from './reducers/login';
 import registerReducer from './reducers/register';
 import verificationReducer from "./reducers/verification";
-import { postsReducer } from "./reducers/posts";
-import thunk from "redux-thunk";
+import thunk from 'redux-thunk';
+
 export const rootReducer = combineReducers({
   user: userReducer,
   login: loginReducer,
@@ -15,4 +18,4 @@ export const rootReducer = combineReducers({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export const store = createStore(rootReducer, applyMiddleware(thunk));
+export const store = createStore(rootReducer,applyMiddleware(thunk));

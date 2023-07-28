@@ -45,7 +45,8 @@ const Register = () => {
   }
 
   return (
-    <div>
+    <RegWrapper>
+    <div className="regWrap">
       <Formik
         initialValues={initialValues}
         validationSchema={RegisterSchema}
@@ -86,6 +87,7 @@ const Register = () => {
         </Form>
       </Formik>
       </div>
+      </RegWrapper>
   );
 };
 
@@ -99,7 +101,7 @@ const RegWrapper = styled.div`
   padding: 100px 50px;
   border-radius: 10px;
   box-shadow: 0 0 0 500vmax rgb(0 0 0 / 0.5);
-  z-index: 300;
+  z-index: 100;
   background-color: white;
 }
 `
