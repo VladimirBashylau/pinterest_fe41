@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
   
 export interface IUser {
     username: string | null;
-    id: number | null;
+    id: string | null;
     email: string | null;
   }
   
@@ -16,13 +16,13 @@ const userReducer = createSlice({
     name:'user',
     initialState,
     reducers: {
-      setUser(state,action) {
+      SetUser(state,action) {
         state = action.payload;
       },
     },
   })
   
   
-  export const {setUser} = userReducer.actions;
-  export default userReducer.reducer ;
+  export const {SetUser} = userReducer.actions;
+  export default userReducer.reducer;
   

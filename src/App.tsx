@@ -2,11 +2,18 @@ import React from "react";
 
 import "./App.css";
 import Header from "./components/header/Header"
+import Register from "./components/register";
+import { useSelector } from "react-redux";
+import Login from "./components/login";
 
 function App() {
+  let loginSelector:string = useSelector((state:any)=>state.login.login);
+  let registerSelector:string = useSelector((state:any)=>state.register.register)
   return (
     <>
       <Header />
+      {loginSelector === 'open' ? <Login/> : ''}
+      {registerSelector === 'open' ? <Register/>  : ''}
     </>
   );
 }
