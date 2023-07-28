@@ -1,10 +1,8 @@
 import React from "react";
-import { FaPinterest, FaSearch } from "react-icons/fa";
-import { IoMdExit } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import login, { SetLogin } from "../../redux/reducers/login";
-import Register from "../register";
+import Register from "../../components/register";
 import { SetRegister } from "../../redux/reducers/register";
 
 const HeaderUnLogin = () => {
@@ -111,7 +109,7 @@ const IconWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-left: 10px;
-  flex: 0.25;
+
   @media (max-width: 568px) {
     display: none;
   }
