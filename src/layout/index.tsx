@@ -5,6 +5,9 @@ import { Outlet } from "react-router-dom";
 // import { useDispatch } from "react-redux";
 // import { setUser } from "../store/actions/user";
 import Header from "./Header/Header";
+import { useSelector } from "react-redux";
+import Login from "../components/login";
+import Register from "../components/register";
 
 export const Root = () => {
   // const dispath = useDispatch();
@@ -26,10 +29,15 @@ export const Root = () => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
 
+  let loginSelector:string = useSelector((state:any)=>state.login.login);
+  let registerSelector:string = useSelector((state:any)=>state.register.register)
+
   return (
     <div>
       <div>
         <Header />
+        {loginSelector === 'open' ? <Login/> : ''}
+      {registerSelector === 'open' ? <Register/>  : ''}
         <main className="content">
           <Outlet />
         </main>

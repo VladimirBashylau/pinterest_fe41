@@ -1,12 +1,21 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { postsReducer } from "./reducers/posts";
 
-export type RootState = ReturnType<typeof store.getState>;
+import { combineReducers, createStore, applyMiddleware} from "redux";
+import userReducer from './reducers/user';
+import loginReducer from './reducers/login';
+import registerReducer from './reducers/register';
+import verificationReducer from "./reducers/verification";
+import thunk from 'redux-thunk';
 
-export type AppDispatch = typeof store.dispatch;
-
-export const store = configureStore({
-  reducer: {
-    posts: postsReducer,
-  },
+export const rootReducer = combineReducers({
+  user: userReducer,
+  login: loginReducer,
+  register: registerReducer,
+  verify: verificationReducer,
+  posts: postsReducer,
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export const store = createStore(rootReducer,applyMiddleware(thunk));
