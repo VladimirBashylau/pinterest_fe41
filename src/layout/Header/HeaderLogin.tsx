@@ -1,17 +1,24 @@
 import React from "react";
 import { FaPinterest, FaSearch } from "react-icons/fa";
 import { IoMdExit } from "react-icons/io";
+import { Link,} from "react-router-dom";
 import styled from "styled-components";
+import {Routes} from "../../constans/Routes"
+import { useDispatch } from "react-redux";
+import { setHeader } from "../../store/reducers/header";
 
 const HeaderLogin = () => {
+  const dispatch = useDispatch();
   return (
     <Wrapper>
       <LogoWrapper>
-        <FaPinterest className="MuiSvgIcon" />
+        <FaPinterest className="MuiSvgIcon"  />
       </LogoWrapper>
+      <Link to={Routes.Home}>
       <HomeButton>
         <span>Home </span>
       </HomeButton>
+      </Link>
 
       <CreateButton>
         <span>Create </span>
@@ -21,7 +28,7 @@ const HeaderLogin = () => {
           <FaSearch />
           <form>
             <input type="text" placeholder="Search" />
-            <button type="submit"></button>
+            <button type="submit" ></button>
           </form>
         </SearchBarWrapper>
       </SearchWrapper>
@@ -31,15 +38,15 @@ const HeaderLogin = () => {
 
         <ShownFaceIcon>
           <IconButton>
-            <IoMdExit className="logout" />
+            <IoMdExit className="logout" onClick={()=>{localStorage.clear();dispatch(setHeader(false))}}/>
           </IconButton>
         </ShownFaceIcon>
       </IconWrapper>
 
       <HiddenFaceIcon>
-        <IconButton>
-          <IoMdExit className="logout" />
-        </IconButton>
+        <IconButton >
+          <IoMdExit className="logout"/>
+        </IconButton >
       </HiddenFaceIcon>
     </Wrapper>
   );
@@ -82,15 +89,22 @@ const CommonButtons = styled.button`
 
 const HomeButton = styled(CommonButtons)`
   background-color: rgb(17, 17, 17);
+  text-decoration: none;
+  border: none;
+  :link{
+    text-decoration: none;
+  }
   span {
     text-decoration: none;
     color: white;
     font-weight: 600;
+    border: none;
   }
   @media (max-width: 768px) {
     background-color: white;
     :hover {
       background-color: #e1e1e1;
+      text-decoration:none;
     }
   }
 `;

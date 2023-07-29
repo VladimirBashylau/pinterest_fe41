@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import HeaderLogin from "./HeaderLogin";
 import HeaderUnLogin from "./HeaderUnLogin";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { LOCAL_STORAGE_KEYS } from "../../services/keys";
+import { setHeader } from "../../store/reducers/header";
 
 const Header = () => {
+  const headerSelector = useSelector((state:any)=> state.header.login);
   const loginSelector = useSelector((state:any)=> state.login);
-  const [login, setLogin] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (localStorage.getItem('REFRESH_TOKEN') != null){dispatch(setHeader(true))};
+  });
   return(
 <div>
-    {login === true ?  <HeaderLogin /> :  <HeaderUnLogin />}
+    {headerSelector === true ?  <HeaderLogin /> :  <HeaderUnLogin />}
 </div>
   )
 };

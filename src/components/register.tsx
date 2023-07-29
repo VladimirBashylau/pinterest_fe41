@@ -5,6 +5,8 @@ import { authService } from "../services/auth";
 import { useState } from "react";
 import { DefaultTextField } from "./DefaultTextFIeld";
 import { styled } from "styled-components";
+import { useDispatch } from "react-redux";
+import { SetRegister } from "../store/reducers/register";
 
 const RegisterSchema = Yup.object().shape({
   username: Yup.string().min(4, "Too shoort name").required("Required"),
@@ -25,6 +27,7 @@ type FormikValues = typeof initialValues;
 const Register = () => {
   const [user, setUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const onSubmit = async (values: FormikValues) => {
     try {
@@ -33,6 +36,7 @@ const Register = () => {
       const { data: user } = await authService.register(values);
 
       setUser(user);
+      dispatch(SetRegister(closed));
     } catch (error) {
       console.dir(error);
     } finally {

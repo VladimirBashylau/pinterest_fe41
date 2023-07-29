@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { SetLogin } from "../../store/reducers/login";
 import { SetRegister } from "../../store/reducers/register";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { Routes } from "../../constans/Routes";
 
 const HeaderUnLogin = () => {
 
@@ -12,6 +14,7 @@ const HeaderUnLogin = () => {
 
   return (
     <Wrapper>
+      <Link to={Routes.Home}>
       <LogoWrapper>
         <svg
           className="MuiSvgIcon"
@@ -26,6 +29,7 @@ const HeaderUnLogin = () => {
           />
         </svg>
       </LogoWrapper>
+      </Link>
 
       <IconWrapper>
         <LoginButton onClick={()=>{loginSelector === 'closed' ? dispatch(SetLogin('open')) : dispatch(SetLogin('closed'))}}>
