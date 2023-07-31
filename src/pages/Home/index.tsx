@@ -15,9 +15,9 @@ const Home = () => {
     error,
   } = useSelector((state: RootState) => state.posts);
 
-  const searchResult = useSelector((state:any)=> state.postSearch.posts)
+  const searchResult = useSelector((state: any) => state.postSearch.posts);
 
-  const searchState = useSelector((state:any)=> state.searchState.search);
+  const searchState = useSelector((state: any) => state.searchState.search);
 
   const [page, setPage] = useState(0);
   const dispatch = useDispatch();
@@ -34,45 +34,48 @@ const Home = () => {
     );
   }
 
-  if(searchState === 'closed') {return(
-    <>
-      {isLoading ? (
-        <CircularProgress />
-      ) : (
-        <>
-          <Wrapper>
-            <Container>
-              {posts.map((post: any) => (
-                <Link to={Routes.PostItem.replace(":id", post.id)}>
-                  <Post key={post.id} title={post.title} src={post.image} />
-                </Link>
-              ))}
-            </Container>
-          </Wrapper>
-        </>
-      )}
-    </>
-  )}
-  else {return(
-    <>
-    {isLoading ? (
-      <CircularProgress />
-    ) : (
+  if (searchState === "closed") {
+    return (
       <>
-        <Wrapper>
-          <Container>
-            {searchResult.map((post: any) => (
-              <Link to={Routes.PostItem.replace(":id", post.id)}>
-                <Post key={post.id} title={post.title} src={post.image} />
-              </Link>
-            ))}
-          </Container>
-        </Wrapper>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <>
+            <Wrapper>
+              <Container>
+                {posts.map((post: any) => (
+                  <Link to={Routes.PostItem.replace(":id", post.id)}>
+                    <Post key={post.id} title={post.title} src={post.image} />
+                  </Link>
+                ))}
+              </Container>
+            </Wrapper>
+          </>
+        )}
       </>
-    )}
-  </>
-  )}
-              }
+    );
+  } else {
+    return (
+      <>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <>
+            <Wrapper>
+              <Container>
+                {searchResult.map((post: any) => (
+                  <Link to={Routes.PostItem.replace(":id", post.id)}>
+                    <Post key={post.id} title={post.title} src={post.image} />
+                  </Link>
+                ))}
+              </Container>
+            </Wrapper>
+          </>
+        )}
+      </>
+    );
+  }
+};
 
 export default Home;
 

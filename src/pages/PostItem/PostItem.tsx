@@ -10,9 +10,8 @@ import {
 import dr from "../../constans/dr.jpg";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { api } from "../../services/api";
 import { authService } from "../../services/auth";
+
 const PostItem = () => {
   const [post, setPost] = useState({
     id: 0,
@@ -21,7 +20,6 @@ const PostItem = () => {
     text: "",
   });
   const params = useParams();
-  const userSelector = useSelector((state:any)=>state.user.username);
 
   useEffect(() => {
     axios
@@ -30,8 +28,8 @@ const PostItem = () => {
         setPost(response.data);
       });
   }, [params.id]);
-  const [user , setUser ] = useState('')
-  authService.getCurrentUser().then(user => setUser(user.data.username));
+  const [user, setUser] = useState("");
+  authService.getCurrentUser().then((user) => setUser(user.data.username));
 
   return (
     <Container>

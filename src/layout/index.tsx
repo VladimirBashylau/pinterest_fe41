@@ -10,34 +10,17 @@ import Login from "../components/login";
 import Register from "../components/register";
 
 export const Root = () => {
-  // const dispath = useDispatch();
-
-  // const authUser = async () => {
-  //   const accessToken = localStorage.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
-
-  //   if (accessToken) {
-  //     try {
-  //       const { data } = await authService.getCurrentUser();
-
-  //       dispath(setUser(data));
-  //     } catch (error) {}
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   authUser();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
-  let loginSelector:string = useSelector((state:any)=>state.login.login);
-  let registerSelector:string = useSelector((state:any)=>state.register.register)
+  let loginSelector: string = useSelector((state: any) => state.login.login);
+  let registerSelector: string = useSelector(
+    (state: any) => state.register.register
+  );
 
   return (
     <div>
       <div>
         <Header />
-        {loginSelector === 'open' ? <Login/> : ''}
-      {registerSelector === 'open' ? <Register/>  : ''}
+        {loginSelector === "open" ? <Login /> : ""}
+        {registerSelector === "open" ? <Register /> : ""}
         <main className="content">
           <Outlet />
         </main>

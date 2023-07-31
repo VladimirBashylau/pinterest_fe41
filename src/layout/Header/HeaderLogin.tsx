@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { FaPinterest, FaSearch } from "react-icons/fa";
 import { IoMdExit } from "react-icons/io";
 import { Link } from "react-router-dom";
@@ -9,8 +9,12 @@ import { setHeader } from "../../store/reducers/header";
 import { api } from "../../services/api";
 import { setSearch } from "../../store/reducers/postsSearch";
 import { SetSearchState } from "../../store/reducers/searchState";
+import { authService } from "../../services/auth";
 
 const HeaderLogin = () => {
+  const [user, setUser] = useState("");
+  authService.getCurrentUser().then((user) => setUser(user.data.username));
+
   const dispatch = useDispatch();
 
   const getPost = (search?: string) => {
@@ -64,7 +68,7 @@ const HeaderLogin = () => {
       </SearchWrapper>
 
       <IconWrapper>
-        <ShownFaceIcon>{/* Аву сюда */}</ShownFaceIcon>
+        <ShownFaceIcon>{user}</ShownFaceIcon>
 
         <ShownFaceIcon>
           <IconButton>
@@ -209,7 +213,7 @@ const SearchBarWrapper = styled.div`
 const IconWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-left: 10px;
   flex: 0.25;
   @media (max-width: 568px) {

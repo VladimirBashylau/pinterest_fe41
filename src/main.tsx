@@ -7,13 +7,9 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Root } from "./layout";
 import { Routes } from "./constans/Routes";
 import Home from "./pages/Home";
-// import Register from "./pages/Register";
-import Post from "./pages/Post";
 import PostItem from "./pages/PostItem/PostItem";
 import Verify from "./components/verify";
 import CreatePinPage from "./pages/Create/CreatePinPage";
-
-// sass installation: npm install node-sass
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -28,16 +24,8 @@ const router = createBrowserRouter([
         path: Routes.Home,
         element: <Home />,
       },
-      // {
-      //   path: Routes.Register,
-      //   element: <Register />,
-      // },
-      // {
-      //   path: Routes.Login,
-      //   element: <Login />,
-      // },
       {
-         path: Routes.Verify,
+        path: Routes.Verify,
         element: <Verify />,
       },
       {
