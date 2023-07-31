@@ -69,10 +69,10 @@ const PostItem = () => {
               <div className="comments">
                 <UserCommentWrap>
                   <UserAvatarWrapper>
-                    <img src={dr} className="UserAvatar" />
+                    <img src={dr} className="user__avatar" />
                   </UserAvatarWrapper>
                   <p className="user__name">name</p>
-                  <p className="UserComment">comment</p>
+                  <p className="user__comment">comment</p>
                 </UserCommentWrap>
               </div>
             </div>
@@ -80,14 +80,14 @@ const PostItem = () => {
 
           <MyCommentWrap>
             <AvatarWrapper>
-              <img src={dr} alt="" className="MyAvatar" />
+              <img src={dr} alt="" className="my__avatar" />
             </AvatarWrapper>
             <FormWrap>
               <form>
                 <input
                   type="text"
                   placeholder="Add a comment"
-                  className="MyComment"
+                  className="my__comment"
                 />
               </form>
             </FormWrap>

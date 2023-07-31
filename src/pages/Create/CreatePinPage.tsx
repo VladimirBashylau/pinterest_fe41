@@ -1,56 +1,81 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import dr from "../../constans/dr.jpg";
-import { useDispatch } from "react-redux";
-import { addPhoto } from "../../store/reducers/posts";
-import { Link } from "react-router-dom";
-import { Routes } from "../../constans/Routes";
+import { postsService } from "../../services/posts";
+import * as Yup from "yup";
+import { toast } from "react-toastify";
+import { Form, Formik } from "formik";
+import { DefaultTextField } from "../../components/DefaultTextFIeld";
 
+const PostSchema = Yup.object().shape({
+  title: Yup.string().min(2).required("Required"),
+  text: Yup.string().min(2).required("Required"),
+});
 const CreatePinPage = () => {
-  const [imgUrl, setImgUrl] = useState<string | ArrayBuffer | null>(null);
+  const inputRef = useRef<null | HTMLInputElement>(null);
 
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
-  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
+  const [file, setFile] = useState<Blob | null>(null);
+  const [previewFile, setPreviewFile] = useState<string | ArrayBuffer | null>(
+    null
+  );
 
-    if (!title && !imgUrl) {
-      return;
+  const onSubmit = async (values: any) => {
+    try {
+      setIsLoading(true);
+      const formData = new FormData();
+
+      formData.append("file", file as Blob);
+
+      const { data } = await postsService.addPost({
+        title: values.title,
+        description: "1",
+        lesson_num: 1,
+        text: values.text,
+        image: formData.get("file"),
+      });
+
+      toast.success(`${data.name} post has been created`);
+    } finally {
+      setIsLoading(false);
     }
-
-    dispatch(
-      addPhoto({
-        title,
-        imageSrc: imgUrl as string,
-        text,
-      })
-    );
   };
 
-  const onChangeFile: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  const onChangeFile: React.ChangeEventHandler<HTMLInputElement> = async (
+    e
+  ) => {
     e.preventDefault();
 
-    const fileReader = new FileReader();
+    const data = await Promise.all(
+      Array.from(e.target.files as FileList).map(
+        (file) =>
+          new Promise((res) => {
+            const fileReader = new FileReader();
 
-    fileReader.readAsDataURL(e.target.files?.[0] as Blob);
+            fileReader.readAsDataURL(file as Blob);
 
-    fileReader.onload = () => {
-      setImgUrl(fileReader.result);
-      console.log(fileReader.result);
-    };
+            fileReader.onload = () => {
+              res(fileReader.result);
+            };
+          })
+      )
+    );
+
+    setFile(e.target.files?.[0] as Blob);
+
+    setPreviewFile(data[0] as string);
   };
 
   return (
-    <Container>
+    <Container onSubmit={onSubmit}>
       <Wrapper>
-        {imgUrl ? (
+        {previewFile ? (
           <ImageWrapper>
-            <img src={imgUrl as string} />
+            <img src={previewFile as string} />
           </ImageWrapper>
         ) : (
-          <UploadImgWrap onSubmit={onSubmit}>
+          <UploadImgWrap>
             <div className="form-input">
               <div className="preview">
                 <img id="file-ip-1-preview"></img>
@@ -58,46 +83,81 @@ const CreatePinPage = () => {
               <label htmlFor="file-ip-1">Upload Image</label>
               <input
                 id="file-ip-1"
-                ref={imgUrl}
                 type="file"
                 onChange={onChangeFile}
-                accept="image/*"
+                ref={inputRef}
               ></input>
             </div>
           </UploadImgWrap>
         )}
         <PostWrapper>
-          <PostTitleWrap>
-            <UploadTitleWrap>
-              <input
-                className="post__title"
-                placeholder="Add your title"
-                onChange={(event) => setTitle(event.target.value)}
-                value={title}
-              ></input>{" "}
-              <div className="wrap__com">
-                <ProfilWrapper>
-                  <div className="user__wrap">
-                    <AvatarWrapper>
-                      <img src={dr} />
-                    </AvatarWrapper>
-                    <div>
-                      <p className="user__name">User</p>
-                    </div>
+          <Formik
+            initialValues={{
+              title: "",
+              lessonNumber: 0,
+              description: "",
+              text: "",
+            }}
+            validationSchema={PostSchema}
+            onSubmit={onSubmit}
+          >
+            <Form className="add_post_form">
+              <PostTitleWrap>
+                <UploadTitleWrap>
+                  <DefaultTextField
+                    label="Add your title"
+                    variant="standard"
+                    name="title"
+                    className="post__title"
+                  />
+
+                  <div className="wrap__com">
+                    <ProfilWrapper>
+                      <div className="user__wrap">
+                        <AvatarWrapper>
+                          <img src={dr} />
+                        </AvatarWrapper>
+                        <div>
+                          <p className="user__name">User</p>
+                        </div>
+                      </div>
+                    </ProfilWrapper>
                   </div>
-                </ProfilWrapper>
-              </div>
-              <input
-                className="post__text"
-                placeholder="Tell everyone what your Pin is about"
-                onChange={(event) => setText(event.target.value)}
-                value={text}
-              ></input>
-            </UploadTitleWrap>
-          </PostTitleWrap>
-          <Link className="create__link" to={Routes.Home}>
-            <UploadImgBtn type="submit">Upload photo</UploadImgBtn>
-          </Link>
+                  <div>
+                    <DefaultTextField
+                      className="none"
+                      label="Lesson number"
+                      type="number"
+                      name="lessonNumber"
+                    />
+                  </div>
+
+                  <DefaultTextField
+                    className="none"
+                    label="Description"
+                    name="description"
+                    multiline
+                  />
+
+                  <DefaultTextField
+                    variant="standard"
+                    label="Tell everyone what your Pin is about"
+                    name="text"
+                    className="post__text"
+                  />
+                </UploadTitleWrap>
+              </PostTitleWrap>
+              <UploadImgBtn type="submit">Upload photo</UploadImgBtn>
+            </Form>
+          </Formik>
+          <input
+            ref={inputRef}
+            type="file"
+            style={{
+              display: "none",
+            }}
+            onChange={onChangeFile}
+          />
         </PostWrapper>
       </Wrapper>
     </Container>
@@ -111,6 +171,9 @@ const Container = styled.div`
   justify-content: center;
   transform: translateY(50%);
   min-height: 500px;
+  .none {
+    display: none;
+  }
 `;
 const UploadImgWrap = styled.form`
   height: 100%;
@@ -193,14 +256,10 @@ const ImageWrapper = styled.div`
 `;
 const PostWrapper = styled.div`
   padding: 30px 32px 30px 32px;
-  /* padding-top: 30px;
-  padding-right: 32px;
-  padding-left: 32px; */
   width: 50%;
-  justify-content: space-between;
+  justify-content: space-evenly;
   display: flex;
   flex-direction: column;
-
   .wrap__com {
     overflow-y: scroll;
     overflow-x: hidden;
@@ -250,79 +309,6 @@ export const UserAvatarWrapper = styled(AvatarWrapper)`
   height: 32px;
   width: 32px;
 `;
-// const PostHeader = styled.div`
-//   display: flex;
-
-//   margin-bottom: 20px;
-//   justify-content: space-between;
-// `;
-// const IconBtnsWrapper = styled.div`
-//   display: flex;
-//   align-items: center;
-//   column-gap: 10px;
-//   svg {
-//     width: 20px;
-//     height: 20px;
-//   }
-// `;
-
-// const UserCommentWrap = styled.div`
-//   display: flex;
-//   column-gap: 10px;
-//   font-size: 16px;
-//   margin: 5px;
-
-//   .user__name {
-//     font-weight: 600;
-//   }
-// `;
-
-// const MyCommentWrap = styled.div`
-//   display: flex;
-//   column-gap: 10px;
-//   align-items: center;
-//   padding: 10px 0;
-// `;
-
-// const CommentName = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   font-size: 20px;
-//   font-weight: 600;
-//   margin-bottom: 12px;
-//   margin-top: 12px;
-//   svg {
-//     width: 20px;
-//     height: 20px;
-//   }
-// `;
-// const FormWrap = styled.div`
-//   align-items: center;
-//   display: flex;
-//   height: 52px;
-//   width: 100%;
-//   border-radius: 50px;
-//   border-top: none;
-//   background-color: #efefef;
-//   padding: 0 1rem;
-//   max-width: 400px;
-//   cursor: pointer;
-//   form {
-//     display: flex;
-//     flex: 1;
-//     padding: 0 0.3rem;
-//   }
-//   form > input {
-//     background-color: transparent;
-//     font-size: 1rem;
-//     border: none;
-//     outline: none;
-//     flex: 1;
-//   }
-//   form input :focus {
-//     border: none;
-//   }
-// `;
 
 const CommonButtons = styled.button`
   display: flex;
@@ -343,12 +329,11 @@ const CommonButtons = styled.button`
 const UploadImgBtn = styled(CommonButtons)`
   background-color: rgb(255, 1, 1);
   color: white;
-
+  width: 200px;
+  :hover {
+    background-color: #e1e1e1;
+  }
   @media (max-width: 768px) {
     background-color: white;
-
-    :hover {
-      background-color: #e1e1e1;
-    }
   }
 `;
