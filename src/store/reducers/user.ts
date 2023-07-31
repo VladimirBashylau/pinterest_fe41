@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface IUser {
-    username: string | null;
     id: string | null;
     email: string | null;
+    username: string | null;
   }
 
   const initialState: IUser = {
-    username: null,
     id: null,
     email: null,
+    username:null,
   };
 
 const userReducer = createSlice({
