@@ -1,44 +1,60 @@
-import React from "react";
+import React, { useRef } from "react";
 import { FaPinterest, FaSearch } from "react-icons/fa";
 import { IoMdExit } from "react-icons/io";
 import { Link,} from "react-router-dom";
 import styled from "styled-components";
 import {Routes} from "../../constans/Routes"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setHeader } from "../../store/reducers/header";
+import { api } from "../../services/api";
+import { setSearch } from "../../store/reducers/postsSearch";
+import { SetSearchState } from "../../store/reducers/searchState";
 
 const HeaderLogin = () => {
   const dispatch = useDispatch();
+
+  const getPost = (search?: string,) => {
+    return api.get("/blog/posts/", {
+      params: {
+        search,
+      },
+    });
+  }
+
+  const SearchSelector = useSelector((state:any)=>state.postSearch)
+
+  const inputRef = useRef(null);
+
   return (
     <Wrapper>
-      <LogoWrapper>
-        <FaPinterest className="MuiSvgIcon"  />
+      <LogoWrapper onClick={()=>dispatch(SetSearchState('closed'))}>
+        <FaPinterest className="MuiSvgIcon" />
       </LogoWrapper>
       <Link to={Routes.Home}>
       <HomeButton>
-        <span>Home </span>
+        <span onClick={()=>dispatch(SetSearchState('closed'))}>Home </span>
       </HomeButton>
       </Link>
 
-      <CreateButton>
+      <CreateButton  onClick={()=>dispatch(SetSearchState('closed'))}>
         <span>Create </span>
       </CreateButton>
       <SearchWrapper>
         <SearchBarWrapper>
           <FaSearch />
-          <form>
-            <input type="text" placeholder="Search" />
-            <button type="submit" ></button>
+          <form onSubmit={(event)=>{let result; return (event.preventDefault(),dispatch(SetSearchState('open')), result = getPost(inputRef.current.value).then((respones)=> dispatch(setSearch(respones.data.results))))}}>
+            <input type="text" placeholder="Search" ref={inputRef} />
+            <button type="submit"></button>
           </form>
         </SearchBarWrapper>
       </SearchWrapper>
 
-      <IconWrapper>
+      <IconWrapper> 
         <ShownFaceIcon>{/* Аву сюда */}</ShownFaceIcon>
 
         <ShownFaceIcon>
           <IconButton>
-            <IoMdExit className="logout" onClick={()=>{localStorage.clear();dispatch(setHeader(false))}}/>
+            <IoMdExit className="logout" onClick={()=>{dispatch(SetSearchState('closed'));localStorage.clear();dispatch(setHeader(false))}}/>
           </IconButton>
         </ShownFaceIcon>
       </IconWrapper>

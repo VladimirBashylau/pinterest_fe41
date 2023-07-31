@@ -5,6 +5,7 @@ import { SetRegister } from "../../store/reducers/register";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Routes } from "../../constans/Routes";
+import { SetSearchState } from "../../store/reducers/searchState";
 
 const HeaderUnLogin = () => {
 
@@ -15,7 +16,7 @@ const HeaderUnLogin = () => {
   return (
     <Wrapper>
       <Link to={Routes.Home}>
-      <LogoWrapper>
+      <LogoWrapper onClick={()=>dispatch(SetSearchState('closed'))}>
         <svg
           className="MuiSvgIcon"
           height="617"

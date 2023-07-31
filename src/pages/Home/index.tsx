@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Post from "./Post";
 import { CircularProgress } from "@mui/material";
-import { fetchPosts } from "../../store/actions/posts";
+import { fetchPosts } from "../../store/posts";
 import { Link } from "react-router-dom";
 import { Routes } from "../../constans/Routes";
 import { RootState } from "../../store";
@@ -14,6 +14,10 @@ const Home = () => {
     loading: isLoading,
     error,
   } = useSelector((state: RootState) => state.posts);
+
+  const searchResult = useSelector((state:any)=> state.postSearch.posts)
+
+  const searchState = useSelector((state:any)=> state.searchState.search);
 
   const [page, setPage] = useState(0);
   const dispatch = useDispatch();
@@ -30,7 +34,7 @@ const Home = () => {
     );
   }
 
-  return (
+  if(searchState === 'closed') {return(
     <>
       {isLoading ? (
         <CircularProgress />
@@ -48,8 +52,27 @@ const Home = () => {
         </>
       )}
     </>
-  );
-};
+  )}
+  else {return(
+    <>
+    {isLoading ? (
+      <CircularProgress />
+    ) : (
+      <>
+        <Wrapper>
+          <Container>
+            {searchResult.map((post: any) => (
+              <Link to={Routes.PostItem.replace(":id", post.id)}>
+                <Post key={post.id} title={post.title} src={post.image} />
+              </Link>
+            ))}
+          </Container>
+        </Wrapper>
+      </>
+    )}
+  </>
+  )}
+              }
 
 export default Home;
 
