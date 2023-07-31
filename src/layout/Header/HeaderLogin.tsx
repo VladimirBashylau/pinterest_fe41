@@ -1,7 +1,9 @@
 import React from "react";
 import { FaPinterest, FaSearch } from "react-icons/fa";
 import { IoMdExit } from "react-icons/io";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Routes } from "../../constans/Routes";
 
 const HeaderLogin = () => {
   return (
@@ -12,10 +14,12 @@ const HeaderLogin = () => {
       <HomeButton>
         <span>Home </span>
       </HomeButton>
+      <Link className="create__link" to={Routes.Create}>
+        <CreateButton>
+          <span>Create </span>
+        </CreateButton>
+      </Link>
 
-      <CreateButton>
-        <span>Create </span>
-      </CreateButton>
       <SearchWrapper>
         <SearchBarWrapper>
           <FaSearch />
@@ -54,6 +58,9 @@ const Wrapper = styled.header`
   padding: 30px 4px 10px 16px;
   background-color: white;
   color: black;
+  .create__link {
+    text-decoration: none;
+  }
 `;
 
 const LogoWrapper = styled.div`
