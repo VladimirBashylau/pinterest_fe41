@@ -8,6 +8,8 @@ import { LOCAL_STORAGE_KEYS } from "../services/keys";
 import { useDispatch, useSelector } from "react-redux";
 import { SetUser } from "../store/reducers/user";
 import { styled } from "styled-components";
+import { setHeader } from "../store/reducers/header";
+import { SetLogin } from "../store/reducers/login";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -20,6 +22,7 @@ const initialValues = {
 };
 
 type FormikValues = typeof initialValues;
+
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -46,6 +49,8 @@ const Login = () => {
       const { data: user } = await authService.getCurrentUser();
 
       dispatch(SetUser(user));
+      dispatch(setHeader(true));
+      dispatch(SetLogin('closed'));
     } catch (error) {
       console.dir(error);
     } finally {

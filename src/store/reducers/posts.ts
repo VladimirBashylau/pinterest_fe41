@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchPosts } from "../actions/posts";
+import { fetchPosts } from "../posts";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 // const initialState = {

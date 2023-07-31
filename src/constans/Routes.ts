@@ -3,7 +3,7 @@ export enum Routes {
   Create = "/create",
   Register = "/register",
   // Login = "/login",
-  // Verify = "/verify/:uid/:token",
+  Verify = "/activate/:uid/:token",
   Post = "/post/:id",
   PostItem = "/postitem/:id",
 }

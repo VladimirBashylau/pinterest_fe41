@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 // import Register from "./pages/Register";
 import Post from "./pages/Post";
 import PostItem from "./pages/PostItem/PostItem";
+import Verify from "./components/verify";
 import CreatePinPage from "./pages/Create/CreatePinPage";
 
 // sass installation: npm install node-sass
@@ -35,10 +36,10 @@ const router = createBrowserRouter([
       //   path: Routes.Login,
       //   element: <Login />,
       // },
-      // {
-      //   path: Routes.Verify,
-      //   element: <Verify />,
-      // },
+      {
+         path: Routes.Verify,
+        element: <Verify />,
+      },
       {
         path: Routes.PostItem,
         element: <PostItem />,
