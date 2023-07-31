@@ -1,13 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchPosts } from "../posts";
-import type { PayloadAction } from "@reduxjs/toolkit";
 
-// const initialState = {
-//   posts: [],
-//   loading: false,
-//
-//   count: null,
-// };
 export interface IPhoto {
   id: number;
   title: string;
@@ -29,19 +22,7 @@ const initialState: IPhotoState = {
 export const postSlice = createSlice({
   name: "post",
   initialState,
-  reducers: {
-    addPhoto(
-      state,
-      action: PayloadAction<{ title: string; imageSrc: string; text: string }>
-    ) {
-      state.posts.unshift({
-        id: Date.now(),
-        title: action.payload.title,
-        text: action.payload.text,
-        url: action.payload.imageSrc,
-      });
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder.addCase(fetchPosts.fulfilled, (state, action) => {
       state.posts = action.payload.results;
@@ -55,5 +36,5 @@ export const postSlice = createSlice({
     });
   },
 });
-export const { addPhoto } = postSlice.actions;
+
 export const postsReducer = postSlice.reducer;

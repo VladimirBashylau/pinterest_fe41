@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 import { FaPinterest, FaSearch } from "react-icons/fa";
 import { IoMdExit } from "react-icons/io";
-import { Link,} from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import {Routes} from "../../constans/Routes"
+import { Routes } from "../../constans/Routes";
 import { useDispatch, useSelector } from "react-redux";
 import { setHeader } from "../../store/reducers/header";
 import { api } from "../../services/api";
@@ -13,31 +13,31 @@ import { SetSearchState } from "../../store/reducers/searchState";
 const HeaderLogin = () => {
   const dispatch = useDispatch();
 
-  const getPost = (search?: string,) => {
+  const getPost = (search?: string) => {
     return api.get("/blog/posts/", {
       params: {
         search,
       },
     });
-  }
+  };
 
-  const SearchSelector = useSelector((state:any)=>state.postSearch)
+  const SearchSelector = useSelector((state: any) => state.postSearch);
 
   const inputRef = useRef(null);
 
   return (
     <Wrapper>
-      <LogoWrapper onClick={()=>dispatch(SetSearchState('closed'))}>
+      <LogoWrapper onClick={() => dispatch(SetSearchState("closed"))}>
         <FaPinterest className="MuiSvgIcon" />
       </LogoWrapper>
-      <Link to={Routes.Home}>
-      <HomeButton>
-        <span onClick={()=>dispatch(SetSearchState('closed'))}>Home </span>
-      </HomeButton>
+      <Link className="create__link" to={Routes.Home}>
+        <HomeButton>
+          <span onClick={() => dispatch(SetSearchState("closed"))}>Home </span>
+        </HomeButton>
       </Link>
 
-      <Link className="create__link" to={Routes.Create} >
-        <CreateButton  onClick={()=>dispatch(SetSearchState('closed'))}>
+      <Link className="create__link" to={Routes.Create}>
+        <CreateButton onClick={() => dispatch(SetSearchState("closed"))}>
           <span>Create </span>
         </CreateButton>
       </Link>
@@ -45,27 +45,45 @@ const HeaderLogin = () => {
       <SearchWrapper>
         <SearchBarWrapper>
           <FaSearch />
-          <form onSubmit={(event)=>{let result; return (event.preventDefault(),dispatch(SetSearchState('open')), result = getPost(inputRef.current.value).then((respones)=> dispatch(setSearch(respones.data.results))))}}>
+          <form
+            onSubmit={(event) => {
+              let result;
+              return (
+                event.preventDefault(),
+                dispatch(SetSearchState("open")),
+                (result = getPost(inputRef.current.value).then((respones) =>
+                  dispatch(setSearch(respones.data.results))
+                ))
+              );
+            }}
+          >
             <input type="text" placeholder="Search" ref={inputRef} />
             <button type="submit"></button>
           </form>
         </SearchBarWrapper>
       </SearchWrapper>
 
-      <IconWrapper> 
+      <IconWrapper>
         <ShownFaceIcon>{/* Аву сюда */}</ShownFaceIcon>
 
         <ShownFaceIcon>
           <IconButton>
-            <IoMdExit className="logout" onClick={()=>{dispatch(SetSearchState('closed'));localStorage.clear();dispatch(setHeader(false))}}/>
+            <IoMdExit
+              className="logout"
+              onClick={() => {
+                dispatch(SetSearchState("closed"));
+                localStorage.clear();
+                dispatch(setHeader(false));
+              }}
+            />
           </IconButton>
         </ShownFaceIcon>
       </IconWrapper>
 
       <HiddenFaceIcon>
-        <IconButton >
-          <IoMdExit className="logout"/>
-        </IconButton >
+        <IconButton>
+          <IoMdExit className="logout" />
+        </IconButton>
       </HiddenFaceIcon>
     </Wrapper>
   );
@@ -113,7 +131,7 @@ const HomeButton = styled(CommonButtons)`
   background-color: rgb(17, 17, 17);
   text-decoration: none;
   border: none;
-  :link{
+  :link {
     text-decoration: none;
   }
   span {
@@ -126,7 +144,7 @@ const HomeButton = styled(CommonButtons)`
     background-color: white;
     :hover {
       background-color: #e1e1e1;
-      text-decoration:none;
+      text-decoration: none;
     }
   }
 `;
