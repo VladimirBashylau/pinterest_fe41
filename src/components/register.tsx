@@ -7,6 +7,7 @@ import { DefaultTextField } from "./DefaultTextFIeld";
 import { styled } from "styled-components";
 import { useDispatch } from "react-redux";
 import { SetRegister } from "../store/reducers/register";
+import { SetUser } from "../store/reducers/user";
 
 const RegisterSchema = Yup.object().shape({
   username: Yup.string().min(4, "Too shoort name").required("Required"),
