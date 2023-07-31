@@ -7,7 +7,7 @@ import {
   AiOutlineRight,
   AiOutlineDown,
 } from "react-icons/ai";
-import dr from "./dr.jpg";
+import dr from "../../constans/dr.jpg";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 const PostItem = () => {
@@ -129,7 +129,7 @@ const ImageWrapper = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    max-width: 600px;
+    max-width: 800px;
   }
 `;
 const PostWrapper = styled.div`

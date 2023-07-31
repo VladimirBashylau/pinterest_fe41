@@ -36,9 +36,12 @@ const HeaderLogin = () => {
       </HomeButton>
       </Link>
 
-      <CreateButton  onClick={()=>dispatch(SetSearchState('closed'))}>
-        <span>Create </span>
-      </CreateButton>
+      <Link className="create__link" to={Routes.Create} >
+        <CreateButton  onClick={()=>dispatch(SetSearchState('closed'))}>
+          <span>Create </span>
+        </CreateButton>
+      </Link>
+
       <SearchWrapper>
         <SearchBarWrapper>
           <FaSearch />
@@ -77,6 +80,9 @@ const Wrapper = styled.header`
   padding: 30px 4px 10px 16px;
   background-color: white;
   color: black;
+  .create__link {
+    text-decoration: none;
+  }
 `;
 
 const LogoWrapper = styled.div`

@@ -5,6 +5,5 @@ export const fetchPosts = createAsyncThunk("user/fetchPosts", async () => {
   const { data } = await postsService.getAll();
   return {
     results: data.results,
-    count: data.count,
   };
 });
