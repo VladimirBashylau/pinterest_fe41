@@ -34,8 +34,9 @@ const HeaderUnLogin = () => {
       </Link>
 
       <IconWrapper>
-        <LoginButton
+        <LoginButton id="loginButton"
           onClick={() => {
+            dispatch(SetRegister('closed'));
             loginSelector === "closed"
               ? dispatch(SetLogin("open"))
               : dispatch(SetLogin("closed"));
@@ -46,6 +47,7 @@ const HeaderUnLogin = () => {
 
         <CreateButton
           onClick={() => {
+            dispatch(SetLogin("closed"))
             registrationSelector === "closed"
               ? dispatch(SetRegister("open"))
               : dispatch(SetRegister("closed"));
