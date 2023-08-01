@@ -1,10 +1,10 @@
 import { api } from "./api";
 
 class PostsService {
-  getAll() {
+  getAll(pin: number) {
     return api.get("/blog/posts/", {
       params: {
-        limit: 100,
+        limit: 18 + pin,
       },
       headers: {
         Authorization: null,

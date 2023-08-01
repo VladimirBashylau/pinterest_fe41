@@ -38,13 +38,13 @@ const Container = styled.div`
     font-weight: 600;
   }
 `;
-const UserWrapper = styled.div`
+export const UserWrapper = styled.div`
   display: flex;
   column-gap: 5px;
   align-items: center;
 `;
 
-const ImageWrapper = styled.div`
+export const ImageWrapper = styled.div`
   cursor: pointer;
   width: 236px;
   box-sizing: border-box;

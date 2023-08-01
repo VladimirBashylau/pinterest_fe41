@@ -298,9 +298,10 @@ const FollowButton = styled(CommonButtons)`
   }
 `;
 
-const SaveButton = styled(CommonButtons)`
+export const SaveButton = styled(CommonButtons)`
   background-color: rgb(255, 0, 0);
   color: #ffffff;
+  /* width: 100%; */
   @media (max-width: 768px) {
     background-color: white;
     :hover {

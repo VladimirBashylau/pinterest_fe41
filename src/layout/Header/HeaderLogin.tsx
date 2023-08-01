@@ -98,8 +98,7 @@ export default HeaderLogin;
 const Wrapper = styled.header`
   display: flex;
   align-items: center;
-  height: 56px;
-  padding: 30px 4px 10px 16px;
+  padding: 16px 4px 10px 16px;
   background-color: white;
   color: black;
   .create__link {
