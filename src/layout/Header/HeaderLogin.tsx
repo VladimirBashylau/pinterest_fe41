@@ -27,7 +27,7 @@ const HeaderLogin = () => {
 
   const SearchSelector = useSelector((state: any) => state.postSearch);
 
-  const inputRef = useRef(null);
+  const inputRef:any = useRef(null);
 
   return (
     <Wrapper>
