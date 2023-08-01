@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Post from "./Post";
+import Post, { ImageWrapper, UserWrapper } from "./Post";
 import { CircularProgress } from "@mui/material";
 import { fetchPosts } from "../../store/posts";
 import { Link } from "react-router-dom";
 import { Routes } from "../../constans/Routes";
 import { RootState } from "../../store";
 import styled from "styled-components";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
+import { SaveButton, UserAvatarWrapper } from "../PostItem/PostItem";
 
 const Home = () => {
   const {
@@ -18,13 +21,19 @@ const Home = () => {
   const searchResult = useSelector((state: any) => state.postSearch.posts);
 
   const searchState = useSelector((state: any) => state.searchState.search);
-
-  const [page, setPage] = useState(0);
+  const loading: any[] = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+  ];
+  const [pin, setPin] = useState(0);
   const dispatch = useDispatch();
 
+  const uploadMore = () => {
+    setPin(pin + 18);
+  };
+
   useEffect(() => {
-    dispatch(fetchPosts());
-  }, [page]);
+    dispatch(fetchPosts(pin));
+  }, [pin]);
 
   if (error) {
     return (
@@ -38,7 +47,33 @@ const Home = () => {
     return (
       <>
         {isLoading ? (
-          <CircularProgress />
+          <Wrapper>
+            <Container>
+              {loading.map(() => (
+                <Stack spacing={1}>
+                  <ImageWrapper>
+                    <Skeleton
+                      animation="wave"
+                      variant="rounded"
+                      width={210}
+                      height={210}
+                    />
+                  </ImageWrapper>
+                  <UserWrapper>
+                    <UserAvatarWrapper>
+                      <Skeleton variant="circular" width={32} height={32} />
+                    </UserAvatarWrapper>
+                    <Skeleton
+                      animation="wave"
+                      variant="rounded"
+                      width={175}
+                      height={20}
+                    />
+                  </UserWrapper>
+                </Stack>
+              ))}
+            </Container>
+          </Wrapper>
         ) : (
           <>
             <Wrapper>
@@ -50,6 +85,7 @@ const Home = () => {
                 ))}
               </Container>
             </Wrapper>
+            <UploadBtn onClick={uploadMore}>Upload More</UploadBtn>
           </>
         )}
       </>
@@ -81,7 +117,20 @@ export default Home;
 
 const Wrapper = styled.div`
   display: flex;
+  padding-top: 50px;
+  width: 100%;
+
+  margin-top: 20px;
+  overflow: hidden;
+`;
+const UploadBtn = styled(SaveButton)`
+  width: 100%;
+`;
+const UploadWrap = styled.div`
+  display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   margin-top: 20px;
