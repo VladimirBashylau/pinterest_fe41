@@ -58,14 +58,8 @@ const Login = () => {
     }
   };
 
-  const modal = document.getElementById('modal');
-  const logniButton = document.getElementById('loginButton');
-
-
-
   useEffect(() => {
     if (id) {
-      //return navigate(Routes.Home);
         console.log('succses')
     }
   }, [id]);

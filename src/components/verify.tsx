@@ -5,7 +5,7 @@ import { Routes } from "../constans/Routes";
 import { styled } from "styled-components";
 
 const Verify = () => {
-    const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const params = useParams();
 
@@ -26,7 +26,6 @@ const Verify = () => {
 
   useEffect(() => {
     activeUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -34,7 +33,9 @@ const Verify = () => {
       {isSuccess ? (
         <div className="success">
           <div className="successText">Verification has been passed</div>
-          <Link className="linkToHome" to={Routes.Home}>Home</Link>
+          <Link className="linkToHome" to={Routes.Home}>
+            Home
+          </Link>
         </div>
       ) : (
         <div className="error">Something went wrong</div>
@@ -44,27 +45,25 @@ const Verify = () => {
 };
 
 const VerifyWrap = styled.div`
-margin:100px 38%;
-.success{
+  margin: 100px 38%;
+  .success {
     display: flex;
     flex-direction: column;
     width: 400px;
-
-}
-.linkToHome{
-    text-decoration:none;
+  }
+  .linkToHome {
+    text-decoration: none;
     padding-left: 120px;
     margin-top: 100px;
     width: 100px;
     font-size: 25px;
     color: red;
     text-transform: uppercase;
-}
-.successText{
-    font-size:20px;
+  }
+  .successText {
+    font-size: 20px;
     text-transform: uppercase;
-}
-
-`
+  }
+`;
 
 export default Verify;

@@ -21,9 +21,11 @@ const Home = () => {
   const searchResult = useSelector((state: any) => state.postSearch.posts);
 
   const searchState = useSelector((state: any) => state.searchState.search);
+
   const loading: any[] = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
   ];
+
   const [pin, setPin] = useState(0);
   const dispatch = useDispatch();
 
@@ -125,16 +127,6 @@ const Wrapper = styled.div`
 `;
 const UploadBtn = styled(SaveButton)`
   width: 100%;
-`;
-const UploadWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  margin-top: 20px;
-  overflow: hidden;
 `;
 
 const Container = styled.div`
